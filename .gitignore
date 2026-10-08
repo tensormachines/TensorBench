@@ -1,0 +1,11 @@
+# *.log
+*.pid
+*.out
+cache/
+suite_results/
+output/
+results/
+__pycache__/
+.bashrc.local
+.env
+*password*

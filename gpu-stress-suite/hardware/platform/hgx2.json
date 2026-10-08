@@ -1,0 +1,16 @@
+{
+  "description": "Local IPMI over open interface - needs passwordless sudo, no BMC credentials.",
+  "design_power_w": 10200,
+  "match": {
+    "bmc_transport": "open",
+    "product_name": ["SYS-821GE-TNHR"]
+  },
+  "bmc": {
+    "logger": "bmc_logger.dgx2.py",
+    "requires_env": false,
+    "requires_sudo": true
+  },
+  "nvml": {
+    "logger": "gpu_logger.py"
+  }
+}

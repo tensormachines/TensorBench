@@ -1,0 +1,80 @@
+{
+  "description": "141GB H200 boards.",
+  "match": {
+    "pci_device_id": [
+      "0x233510DE"
+    ],
+    "memory_mib": {
+      "min": 140334,
+      "max": 145208
+    }
+  },
+  "vram": {
+    "reserve_fraction": 0.8
+  },
+  "workloads": {
+    "workload1_tensor_compute": {
+      "matrix_size": 32768,
+      "batch_size": 4,
+      "precision": "fp16"
+    },
+    "workload2_conv_compute": {
+      "batch_sizes": [128, 64, 32],
+      "image_size": 224,
+      "in_channels": 512,
+      "out_channels": 512,
+      "kernel_size": 5
+    },
+    "workload3_random_access_memory": {
+      "working_set_gb": 6.0
+    },
+    "workload4_fft_compute": {
+      "batch_sizes": [8, 4, 2, 1],
+      "grid_sizes": [8192, 6144, 4096]
+    },
+    "workload5_memory_bandwidth": {
+      "buffer_gb": 16.0
+    },
+    "workload6_multigpu_nccl": {
+      "tensor_mb": 2048,
+      "env": ["NCCL_NVLS_ENABLE=0"]
+    },
+    "workload_1C": {
+      "batch": 128,
+      "seq": 128,
+      "gen_tokens": 1024,
+      "instances_per_gpu": 4,
+      "gpu_mode": "sequential",
+      "quantization": "gptq_marlin",
+      "enforce_eager": false,
+      "mps": true
+    },
+    "workload_2A": {
+      "batch": 21,
+      "seq": 256,
+      "gen_tokens": 2048,
+      "instances_per_gpu": 4,
+      "quantization": "gptq_marlin",
+      "kv_cache_dtype": "fp8_e5m2",
+      "enforce_eager": false,
+      "mps": true
+    },
+    "workload_2B": {
+      "training": "full",
+      "base_model": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "batch": 2,
+      "seq": 512,
+      "grad_accum": 1,
+      "steps": 1000
+    },
+    "workload_3A": {
+      "batch": 2,
+      "seq": 4096,
+      "instances_per_gpu": 4,
+      "gpu_mode": "parallel",
+      "kv_cache_dtype": "auto",
+      "enforce_eager": true,
+      "mps": false
+    }
+  }
+}

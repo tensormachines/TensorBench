@@ -1,0 +1,19 @@
+{
+  "description": "Local IPMI over open interface - needs passwordless sudo, no BMC credentials.",
+  "design_power_w": 10000,
+  "match": {
+    "bmc_transport": "open",
+    "requires_sensors": [
+      "POWER_PSU0",
+      "TEMP_CPU0"
+    ]
+  },
+  "bmc": {
+    "logger": "bmc_logger.dgx2.py",
+    "requires_env": false,
+    "requires_sudo": true
+  },
+  "nvml": {
+    "logger": "gpu_logger.py"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "description": "32GB V100 boards - SXM2 (DGX-1) and SXM3 (DGX-2) take the same workload sizing.",
+  "match": {
+    "pci_device_id": [
+      "0x1DB510DE",
+      "0x1DB810DE"
+    ],
+    "memory_mib": {
+      "min": 32000,
+      "max": 33000
+    }
+  },
+  "vram": {
+    "reserve_fraction": 0.8
+  },
+  "workloads": {
+    "workload1_tensor_compute": {
+      "matrix_size": 8192,
+      "batch_size": 4,
+      "precision": "fp16"
+    },
+    "workload2_conv_compute": {
+      "batch_sizes": [
+        64,
+        32,
+        16
+      ],
+      "image_size": 224
+    },
+    "workload3_random_access_memory": {
+      "working_set_gb": 1.5
+    },
+    "workload4_fft_compute": {
+      "batch_sizes": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "grid_sizes": [
+        2048,
+        1536,
+        1024
+      ]
+    },
+    "workload5_memory_bandwidth": {
+      "buffer_gb": 4.0
+    },
+    "workload6_multigpu_nccl": {
+      "tensor_mb": 512
+    },
+    "workload_1C": {
+      "batch": 16,
+      "seq": 1024
+    },
+    "workload_2A": {
+      "batch": 16,
+      "seq": 2048
+    },
+    "workload_2B": {
+      "_note": "Llama-3-8B-Instruct FP16, preserving the recipe's '8B' model for the write-path diagnostic. batch 16 x grad_accum 4 = effective batch 64; 60 steps take about 13 min on a V100. batch 32 runs out of memory (29.59 GB resident + 3.9 GB for the cross-entropy backward).",
+      "base_model": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "batch": 16,
+      "seq": 256,
+      "grad_accum": 4,
+      "steps": 60
+    },
+    "workload_3A": {
+      "batch": 1,
+      "seq": 4096
+    }
+  }
+}

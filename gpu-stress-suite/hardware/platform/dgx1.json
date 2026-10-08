@@ -1,0 +1,19 @@
+{
+  "description": "Remote IPMI over lanplus - reads BMC_HOST/USER/PASS from loggers/.env",
+  "design_power_w": 3500,
+  "match": {
+    "bmc_transport": "lanplus",
+    "requires_sensors": [
+      "PSU1 Input",
+      "Volt_P12V"
+    ]
+  },
+  "bmc": {
+    "logger": "bmc_logger.dgx1.py",
+    "requires_env": true,
+    "requires_sudo": false
+  },
+  "nvml": {
+    "logger": "gpu_logger.py"
+  }
+}

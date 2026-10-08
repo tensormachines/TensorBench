@@ -1,0 +1,15 @@
+{
+  "machine_id": "<hostname>",
+  "alias": "<short-name>",
+  "hardware": "<model>",
+  "status": "healthy | suspect_hardware | failed",
+  "verdict": "<one-line human summary; empty if healthy>",
+  "events": [
+    {
+      "assessment_id": "<assessment folder name>",
+      "phase": "<phase where it faulted, e.g. 2B>",
+      "cpu": 0,
+      "fault_class": "cpu_mce_uncorrectable | gpu_xid | nvlink_sxid | oom | thermal | other"
+    }
+  ]
+}

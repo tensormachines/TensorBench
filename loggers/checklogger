@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# checklogger — show whether the NVML and BMC telemetry loggers are running.
+#
+# Reads the PID files in LOGGER_DIR (default /opt/tensormachines/loggers).
+# Exits 0 when both loggers are running, 1 otherwise.
+set -u
+
+LOGGER_DIR="${LOGGER_DIR:-/opt/tensormachines/loggers}"
+
+status=0
+for name in gpu_logger bmc_logger; do
+  pid_file="${LOGGER_DIR}/${name}.pid"
+  pid="$(cat "${pid_file}" 2>/dev/null || true)"
+  cmd="$([ -n "${pid}" ] && ps -p "${pid}" -o cmd= 2>/dev/null || true)"
+
+  if [ -z "${pid}" ]; then
+    printf '%-10s  not started (no %s)\n' "${name}" "${pid_file}"
+    status=1
+  elif [[ "${cmd}" != *"/${name}"*.py* ]]; then
+    printf '%-10s  not running (last PID %s)\n' "${name}" "${pid}"
+    status=1
+  else
+    printf '%-10s  running  PID %s, up %s\n' "${name}" "${pid}" \
+      "$(ps -p "${pid}" -o etime= | tr -d ' ')"
+    printf '            %s\n' "${cmd}"
+  fi
+done
+exit "${status}"

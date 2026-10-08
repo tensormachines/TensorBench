@@ -1,0 +1,16 @@
+{
+  "description": "Digitalocean droplet",
+  "match": {
+    "bmc_transport": "none",
+    "requires_sensors": [],
+    "product_name": [
+      "Droplet"
+    ]
+  },
+  "bmc": {
+    "logger": "bmc_logger.dgx2.py"
+  },
+  "nvml": {
+    "logger": "gpu_logger.py"
+  }
+}
